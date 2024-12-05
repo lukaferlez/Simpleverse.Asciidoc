@@ -104,7 +104,7 @@ function convertAsciiDocToPdf {
 function ConvertTo-Pdf {
 	param (
 		[Parameter(Position=0,Mandatory)] [ConversionFolderInfo[]] $sources,
-		[Parameter(Mandatory=$false)] [Alias('o')] [string] $outputDirectory = './build/pdf',
+		[Parameter(Mandatory=$false)] [Alias('o')] [string] $outputDirectory = './.build/pdf',
 		[Parameter(Mandatory=$false)] [Alias('k')] [string[]] $kramdocAttributes,
 		[Parameter(Mandatory=$false)] [Alias('a')] [string[]] $asciidoctorAttributes
 	)

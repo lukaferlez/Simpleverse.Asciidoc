@@ -6,7 +6,7 @@ function ConvertTo-Docx {
 		[Parameter(Mandatory = $false)]
 		[ValidateNotNullOrWhiteSpace()]
 		[Alias('o')]
-		[string] $OutputDir = 'build/docx',
+		[string] $OutputDir = './.build/docx',
 		[Parameter(Mandatory = $false)]
 		[Alias('k')]
 		[string[]] $KramdocAttributes,
