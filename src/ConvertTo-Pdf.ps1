@@ -147,7 +147,7 @@ function ConvertTo-Pdf {
 
 	Write-Information "Cleaning up"
 	Write-Information "==========================================="
-	# Remove-Item $outputDirectory -i @("*.adoc", "*.md", "diag-*.*") -Recurse -Force
+	Remove-Item $outputDirectory -i @("*.adoc", "*.md", "diag-*.*") -Recurse -Force
 	Write-Information ""
 
 	Write-Information "End build PDF"
