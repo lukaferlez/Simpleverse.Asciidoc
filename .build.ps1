@@ -63,7 +63,7 @@ task import build,{
 
 task test import, {
 	Push-Location "tests/"
-	convertto-pdf @((Use-ConversionFolder "docs/")) -k 'title-page','icons=font','icon-set=fas','page-layout=page','toc','toclevels=2' -a 'author="Me, me@me.com"','title-page' -vf "%cE"
+	convertto-pdf @((Use-ConversionFolder "docs/")) -k 'title-page','icons=font','icon-set=fas','page-layout=page','toc','toclevels=2' -a 'author="Me, me@me.com"','title-page' -vf "%cE" -outputDirectoryCreated:$true
 	Pop-Location
 }
 

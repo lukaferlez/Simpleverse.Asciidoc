@@ -111,7 +111,8 @@ function ConvertTo-Pdf {
 		[Parameter(Mandatory=$false)] [Alias('o')] [string] $outputDirectory = './.build/pdf',
 		[Parameter(Mandatory=$false)] [Alias('k')] [string[]] $kramdocAttributes,
 		[Parameter(Mandatory=$false)] [Alias('a')] [string[]] $asciidoctorAttributes,
-		[Parameter(Mandatory=$false)] [Alias('vf')] [string] $versionFormat = "%cE, %ai"
+		[Parameter(Mandatory=$false)] [Alias('vf')] [string] $versionFormat = "%cE, %ai",
+		[Parameter(Mandatory=$false)] [Alias('c')] [switch] $outputDirectoryCreated
 	)
 	$InformationPreference = 'Continue'
 
@@ -131,10 +132,12 @@ function ConvertTo-Pdf {
 # 	}
 # 	Write-Information ""
 
-	if (Test-Path $outputDirectory) {
-		Remove-Item -r -fo $outputDirectory
+	if ($outputDirectoryCreated -eq $false) {
+		if (Test-Path $outputDirectory) {
+			Remove-Item -r -fo $outputDirectory
+		}
+		$null = New-Item $outputDirectory -ItemType Directory
 	}
-	$null = New-Item $outputDirectory -ItemType Directory
 
 	Write-Information "Copy source to output"
 	Write-Information "==========================================="
