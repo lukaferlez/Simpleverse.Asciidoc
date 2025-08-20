@@ -61,4 +61,10 @@ task import build,{
 	Import-Module "$($outputDir)/$($moduleName).psd1"
 }
 
+task test import, {
+	Push-Location "tests/"
+	convertto-pdf @((Use-ConversionFolder "docs/")) -k 'title-page','icons=font','icon-set=fas','page-layout=page','toc','toclevels=2' -a 'author="Me, me@me.com"','title-page' -vf "%cE"
+	Pop-Location
+}
+
 task . build

@@ -4,7 +4,7 @@ class ConversionFileInfo
 	[ValidateNotNullOrEmpty()][ConversionFolderInfo] $FolderInfo
 	[ValidateNotNullOrEmpty()][string]$SourcePath
 	[ValidateNotNullOrEmpty()][string]$TargetPath
-	[ValidateNotNullOrEmpty()][string]$ChangeDate
+	[string]$ChangeDate
 
 	ConversionFolderInfo(
 		[ConversionFolderInfo] $FolderInfo,
@@ -22,7 +22,8 @@ class ConversionFileInfo
 function collectFileInformation {
 	Param(
 		[Parameter(Position=0,Mandatory)][ConversionFolderInfo[]] $folders,
-		[Parameter(Position=1,Mandatory)][string] $outputDirectory
+		[Parameter(Position=1,Mandatory)][string] $outputDirectory,
+		[Parameter(Mandatory=$false)][Alias('vf')][string] $versionFormat
 	)
 	$InformationPreference = 'Continue'
 	
@@ -34,10 +35,13 @@ function collectFileInformation {
 		Push-Location $folderInfo.SourcePath
 		Write-Information (Get-Location | Out-String)
 		Get-ChildItem -r -i *.adoc,*.md | ForEach-Object { 
-			$date = git log -1 --format="%cE, %ai" $_.FullName;
-			if (!$date) {
-				$date = "unoffical"
+			if ($null -ne $versionFormat -and $versionFormat -ne "") {
+				$date = git log -1 --format="%cE, %ai" $_.FullName;
+				if (!$date) {
+					$date = "unoffical"
+				}	
 			}
+			
 			$relativePath = Resolve-Path -Path $_.FullName -Relative | Split-Path -Parent
 			$targetPath = Join-Path $outputDirectory -ChildPath ($folderInfo.TargetPath) | Join-Path -ChildPath $relativePath | Join-Path -ChildPath ($_.BaseName+'.adoc')
 			[ConversionFileInfo]@{ FolderInfo = $folderInfo; SourcePath = $_; ChangeDate = $date; TargetPath = $targetPath; }
@@ -106,7 +110,8 @@ function ConvertTo-Pdf {
 		[Parameter(Position=0,Mandatory)] [ConversionFolderInfo[]] $sources,
 		[Parameter(Mandatory=$false)] [Alias('o')] [string] $outputDirectory = './.build/pdf',
 		[Parameter(Mandatory=$false)] [Alias('k')] [string[]] $kramdocAttributes,
-		[Parameter(Mandatory=$false)] [Alias('a')] [string[]] $asciidoctorAttributes
+		[Parameter(Mandatory=$false)] [Alias('a')] [string[]] $asciidoctorAttributes,
+		[Parameter(Mandatory=$false)] [Alias('vf')] [string] $versionFormat = "%cE, %ai"
 	)
 	$InformationPreference = 'Continue'
 
@@ -140,7 +145,7 @@ function ConvertTo-Pdf {
 
 	Write-Information "Execute conversion"
 	Write-Information "==========================================="
-	$filesToProcess = collectFileInformation $sources $outputDirectory
+	$filesToProcess = collectFileInformation $sources $outputDirectory -vf $versionFormat
 	ConvertTo-AsciiDoc $outputDirectory -a $kramdocAttributes
 	convertAsciiDocToPdf $filesToProcess -a $asciidoctorAttributes
 	Write-Information ""

@@ -30,6 +30,7 @@ Parameters
 * an array of folders to convert
 * -k list of kramdoc attributes to be passed in
 * -a list of asciidoctor attributes to be passed in
+* -vf format for git log command to extract version information. Default is "%cE, %ai" -[username](https://git-scm.com/docs/git-log#Documentation/git-log.txt-cE), [timestamp](https://git-scm.com/docs/git-log#Documentation/git-log.txt-aI)
 
 ## Converting Asciidoc to Docx
 Converts Markdown & Asciidoc files to Docx. Utilizes kramdoc to convert Markdown to AsciiDoc and the Asciidoctor to convert to docbook and pandoc to convert docbook to docx.
