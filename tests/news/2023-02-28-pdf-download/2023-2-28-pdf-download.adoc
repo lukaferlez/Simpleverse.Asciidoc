@@ -1,0 +1,10 @@
+:page-title: Available PDF download
+:page-layout: post
+:page-categories: news documentation documenting
+:page-tags: [news, documentation, documenting]
+:page-badges: [ { type: success, tag: "✨ feature" }]
+:imagesdir: ./
+
+Update documentation site with the ability to download a PDF copy of an article where available.
+
+On the title page the PDF's include a timestamp when they were last changed and an author as well.
