@@ -36,7 +36,8 @@ function collectFileInformation {
 		Write-Information (Get-Location | Out-String)
 		Get-ChildItem -r -i *.adoc,*.md | ForEach-Object { 
 			if ($null -ne $versionFormat -and $versionFormat -ne "") {
-				$date = git log -1 --format="%cE, %ai" $_.FullName;
+				$date = git log -1 --format=$versionFormat $_.FullName;
+				Write-Information ("File: " + $_.FullName + " Change date: " + $date)
 				if (!$date) {
 					$date = "unoffical"
 				}	
@@ -111,8 +112,7 @@ function ConvertTo-Pdf {
 		[Parameter(Mandatory=$false)] [Alias('o')] [string] $outputDirectory = './.build/pdf',
 		[Parameter(Mandatory=$false)] [Alias('k')] [string[]] $kramdocAttributes,
 		[Parameter(Mandatory=$false)] [Alias('a')] [string[]] $asciidoctorAttributes,
-		[Parameter(Mandatory=$false)] [Alias('vf')] [string] $versionFormat = "%cE, %ai",
-		[Parameter(Mandatory=$false)] [Alias('c')] [switch] $outputDirectoryCreated
+		[Parameter(Mandatory=$false)] [Alias('vf')] [string] $versionFormat = "%cE, %ai"
 	)
 	$InformationPreference = 'Continue'
 
@@ -132,15 +132,14 @@ function ConvertTo-Pdf {
 # 	}
 # 	Write-Information ""
 
-	if ($outputDirectoryCreated -eq $false) {
-		if (Test-Path $outputDirectory) {
-			Remove-Item -r -fo $outputDirectory
-		}
-		$null = New-Item $outputDirectory -ItemType Directory
+	if (Test-Path $outputDirectory) {
+		Remove-Item -r -fo $outputDirectory
 	}
+	$null = New-Item $outputDirectory -ItemType Directory
 
 	Write-Information "Copy source to output"
 	Write-Information "==========================================="
+
 	$sources | ForEach-Object {
 		Copy-Item $_.SourcePath -Destination (Join-Path $outputDirectory $_.TargetPath) -Force -Recurse
 	}
