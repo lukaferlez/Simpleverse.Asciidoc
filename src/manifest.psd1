@@ -1,4 +1,4 @@
-# Module manifest for module 'Simpleverse-Bicep'
+# Module manifest for module 'Simpleverse.Asciidoc'
 
 @{
 
@@ -24,12 +24,12 @@
 	Copyright         = '(c) luka@ferlez. All rights reserved.'
 	
 	# Description of the functionality provided by this module
-	Description = 'Simplifies operations with custom Bicep modules and version maintenance.
-		* Get-BicepModuleImport - Returns list of imports/modules used in Bicep files.
-		* Get-BicepModuleChanged - Returns list of impacted modules impacted by changes between two commits. It will include modules changes following the import hierarchy provuiding a full list of impacted modules.
-		* Get-BicepModuleForPublish - Returns list of Bicep modules to publish based on the changes between two commits or all modules based on parameters. It will include modules changes following the import hierarchy provuiding a full list of impacted modules.
-		* Publish-BicepModule - Publishes Bicep modules to Azure ACR.
-		* Update-BicepModuleVersion - Updates the version of the imports & modules from custom repositories to the latest version available in the registry. Currently supports only Azure ACR.
+	Description = 'Converts AsciiDoc documents to PDF, DOCX, and DocBook, and manages conversion working folders.
+		* ConvertTo-Pdf - Converts AsciiDoc files to PDF.
+		* ConvertTo-Docx - Converts AsciiDoc files to DOCX.
+		* ConvertTo-Docbook - Converts AsciiDoc files to DocBook.
+		* ConvertTo-AsciiDoc - Converts documents to AsciiDoc.
+		* Use-ConversionFolder - Sets up and manages a working folder for document conversion.
 	'
 	
 	# Minimum version of the PowerShell engine required by this module
@@ -95,13 +95,13 @@
 		PSData = @{
 	
 			# Tags applied to this module. These help with module discovery in online galleries.
-			Tags = "Bicep", "Azure", "ACR", "Publish", "Version"
+			Tags = "Asciidoc", "Markdown", "PDF", "Docx", "Pandoc"
 	
 			# A URL to the license for this module.
-			LicenseUri = 'https://github.com/lukaferlez/Simpleverse.Bicep?tab=MIT-1-ov-file#readme'
+			LicenseUri = 'https://github.com/lukaferlez/Simpleverse.Asciidoc?tab=MIT-1-ov-file#readme'
 	
 			# A URL to the main website for this project.
-			ProjectUri = 'https://github.com/lukaferlez/Simpleverse.Bicep'
+			ProjectUri = 'https://github.com/lukaferlez/Simpleverse.Asciidoc'
 	
 			# A URL to an icon representing this module.
 			# IconUri = ''
